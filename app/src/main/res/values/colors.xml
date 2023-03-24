@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_policy">#FC4C9CF3</color>
     <color name="color_login_tfields">#434242</color>
+    <color name="color_issues">#DF000000</color>
 </resources>

@@ -9,5 +9,7 @@
         another scrolling view. Normally this would be difficult task because system would be
         unable to decide which view to scroll. This is where NestedScrollView comes into role.
     </string>
+    <string name="tv_followers"> %s followers</string>
+    <string name="tv_following"> %s following</string>
 
 </resources>

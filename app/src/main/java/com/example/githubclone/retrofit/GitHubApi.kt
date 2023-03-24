@@ -1,9 +1,6 @@
 package com.example.githubclone.retrofit
 
-import com.example.githubclone.data.models.GenericData
-import com.example.githubclone.data.models.GetAccessTokenResponceData
-import com.example.githubclone.data.models.GetUserProfileInfoResponceData
-import com.example.githubclone.data.models.SearchUsersByUsernameResponceData
+import com.example.githubclone.data.models.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
@@ -32,5 +29,11 @@ interface GitHubApi {
 
     @GET("/search/users?q")
     suspend fun searchUsersByUsername(@Query("q") username: String) : Response<SearchUsersByUsernameResponceData>
+
+    @GET("/user/repos")
+    suspend fun getUserRepositories() : Response<List<GetUserRepositories>>
+
+    @GET("/search/repositories?q")
+    suspend fun searchRepoByRepoName(@Query("q") repoName: String) : Response<SearchRepoByRepoNameResponceData>
 
 }

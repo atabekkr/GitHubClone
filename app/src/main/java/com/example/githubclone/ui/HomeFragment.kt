@@ -22,6 +22,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
+        Log.d("EEEE", "homefrag")
+
         initObservers()
 
         binding.apply {
@@ -34,12 +36,26 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             ivSearch.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
             }
+
+            llStarred.setOnClickListener {
+                lifecycleScope.launchWhenResumed {
+                    viewModel.getUserRepositories()
+                }
+            }
+
+            llOrg.setOnClickListener {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+            }
         }
     }
 
     private fun initObservers() {
         viewModel.getUserPrInfoSuccessFlow.onEach {
             Log.d("atabekkr", it.login)
+        }.launchIn(lifecycleScope)
+
+        viewModel.getUserRepositoriesFlow.onEach {
+            Log.d("atabekkr", it.last().name)
         }.launchIn(lifecycleScope)
     }
 }

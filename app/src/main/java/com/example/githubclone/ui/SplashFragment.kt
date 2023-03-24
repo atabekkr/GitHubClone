@@ -1,6 +1,7 @@
 package com.example.githubclone.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -18,8 +19,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash){
 
             delay(1000)
             if (LocalStorage().isLogin) {
-                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
+                Log.d("TTTT", "ksajdfksjfio")
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToContainerHomeFragment())
             } else {
+                Log.d("TTTT", "is logine5")
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFirstFragment())
             }
         }

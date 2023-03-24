@@ -49,4 +49,26 @@ class MainRepository(private val api: GitHubApi) {
             emit(ResultData.Message(responce.message()))
         }
     }
+
+    suspend fun getUserRepositories() = flow {
+        val responce =
+            api.getUserRepositories()
+
+        if (responce.isSuccessful) {
+            emit(ResultData.Success(responce.body()!!))
+        } else {
+            emit(ResultData.Message(responce.message()))
+        }
+    }
+
+    suspend fun searchRepoByRepoName(repoName: String) = flow {
+        val responce =
+            api.searchRepoByRepoName(repoName)
+
+        if (responce.isSuccessful) {
+            emit(ResultData.Success(responce.body()!!.items[0].name))
+        } else {
+            emit(ResultData.Message(responce.message()))
+        }
+    }
 }

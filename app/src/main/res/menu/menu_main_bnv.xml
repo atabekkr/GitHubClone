@@ -12,4 +12,16 @@
         android:enabled="true"
         android:title="Notification"
         android:icon="@drawable/ic_notification" />
+
+    <item
+        android:id="@+id/explore"
+        android:enabled="true"
+        android:title="Explore"
+        android:icon="@drawable/ic_explore" />
+
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile" />
 </menu>

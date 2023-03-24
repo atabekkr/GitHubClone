@@ -27,7 +27,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             val value = binding.etSearch.text.toString()
             if (value.isNotEmpty()) {
                 lifecycleScope.launchWhenResumed {
-                    viewModel.searchUsersByUserName(value)
+                    viewModel.searchRepoByRepoName(value)
                 }
             }
         }

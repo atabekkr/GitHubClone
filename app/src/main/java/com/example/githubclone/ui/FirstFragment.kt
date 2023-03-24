@@ -45,9 +45,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         viewModel.getSuccessFlow.onEach {
             LocalStorage().token = it
             LocalStorage().isLogin = true
-            findNavController().navigate(
-                FirstFragmentDirections.actionFirstFragmentToHomeFragment()
-            )
         }.launchIn(lifecycleScope)
 
         viewModel.getMessageFlow.onEach {
