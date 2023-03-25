@@ -44,7 +44,7 @@ class MainRepository(private val api: GitHubApi) {
             api.searchUsersByUsername(userName)
 
         if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!.items.last().login))
+            emit(ResultData.Success(responce.body()!!.items))
         } else {
             emit(ResultData.Message(responce.message()))
         }
@@ -66,7 +66,7 @@ class MainRepository(private val api: GitHubApi) {
             api.searchRepoByRepoName(repoName)
 
         if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!.items[0].name))
+            emit(ResultData.Success(responce.body()!!.items))
         } else {
             emit(ResultData.Message(responce.message()))
         }

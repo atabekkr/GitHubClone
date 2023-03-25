@@ -2,14 +2,13 @@ package com.example.githubclone.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubclone.data.models.GetUserProfileInfoResponceData
-import com.example.githubclone.data.models.GetUserRepositories
-import com.example.githubclone.data.models.ResultData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.example.githubclone.data.models.*
 import com.example.githubclone.domain.repository.MainRepository
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.example.githubclone.ui.paging.PageSource
+import kotlinx.coroutines.flow.*
 
 class MainViewModel(private val repo: MainRepository) : ViewModel() {
 
@@ -19,6 +18,9 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
 
     val getUserPrInfoSuccessFlow = MutableSharedFlow<GetUserProfileInfoResponceData>()
     val getUserRepositoriesFlow = MutableSharedFlow<List<GetUserRepositories>>()
+    val getSearchByUserFlow = MutableSharedFlow<List<ItemsData>>()
+    val searchReposByRepoNameFlow = MutableSharedFlow<List<ItemsRepoData>>()
+
     suspend fun isSuccess() {
         repo.loginApi().onEach {
             when(it) {
@@ -55,7 +57,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
         repo.searchUsersByUsername(userName).onEach {
             when (it) {
                 is ResultData.Success -> {
-                    getSuccessFlow.emit(it.data)
+                    getSearchByUserFlow.emit(it.data)
                 }
                 is ResultData.Message -> {
                     getMessageFlow.emit(it.message)
@@ -87,7 +89,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
         repo.searchRepoByRepoName(repoName).onEach {
             when (it) {
                 is ResultData.Success -> {
-                    getSuccessFlow.emit(it.data)
+                    searchReposByRepoNameFlow.emit(it.data)
                 }
                 is ResultData.Message -> {
                     getMessageFlow.emit(it.message)

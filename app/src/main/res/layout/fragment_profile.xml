@@ -38,6 +38,7 @@
         android:layout_margin="12dp" />
 
     <TextView
+        android:id="@+id/tv_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="atabekkewqr"
@@ -71,6 +72,7 @@
         android:text="@string/tv_followers" />
 
     <TextView
+        android:id="@+id/tv_following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -151,6 +153,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/count_repo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12"
@@ -200,9 +203,10 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/count_org"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12"
+        android:text="0"
         android:textColor="@color/black"
         android:fontFamily="@font/lato_regular"
         app:layout_constraintEnd_toEndOf="parent"
@@ -248,9 +252,10 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/count_starred"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12"
+        android:text="0"
         android:textColor="@color/black"
         android:fontFamily="@font/lato_regular"
         app:layout_constraintEnd_toEndOf="parent"

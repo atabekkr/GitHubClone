@@ -8,20 +8,20 @@
         android:icon="@drawable/ic_home" />
 
     <item
-        android:id="@+id/notification"
+        android:id="@+id/notificationsFragment"
         android:enabled="true"
         android:title="Notification"
         android:icon="@drawable/ic_notification" />
 
     <item
-        android:id="@+id/explore"
+        android:id="@+id/exploreFragment"
         android:enabled="true"
         android:title="Explore"
         android:icon="@drawable/ic_explore" />
 
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:enabled="true"
         android:title="Profile"
-        android:icon="@drawable/ic_profile" />
+        android:icon="@drawable/ic_user" />
 </menu>

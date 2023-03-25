@@ -45,6 +45,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="12dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_search"
             app:layout_constraintEnd_toStartOf="@id/iv_plus"
             app:layout_constraintTop_toTopOf="@id/tv_home"

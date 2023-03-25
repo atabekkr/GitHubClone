@@ -11,5 +11,9 @@
     </string>
     <string name="tv_followers"> %s followers</string>
     <string name="tv_following"> %s following</string>
+    <string name="repo_text">Repositories with "%s"</string>
+    <string name="people_text">People with " "%s" "</string>
+    <string name="text_long">Search all of GitHub for People, Repositories, Organizations, Issues, and Pull Requests.</string>
+    <string name="text_sk">%sk</string>
 
 </resources>

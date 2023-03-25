@@ -27,23 +27,23 @@ class ContainerHomeFragment: Fragment(R.layout.fragment_container_home) {
 
         navController = navHostFragment.findNavController()
 
-        binding.bnvMain.setupWithNavController(navController)
-
-        binding.bnvMain.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.homeFragment ->{
-                }
-                R.id.notification -> {
-                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToNotificationsFragment())
-                }
-                R.id.explore -> {
-                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToExploreFragment())
-                }
-                R.id.profile -> {
-                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
-                }
-            }
-            true
-        }
+//        binding.bnvMain.setupWithNavController(navController)
+//
+//        binding.bnvMain.setOnNavigationItemSelectedListener {
+//            when(it.itemId){
+//                R.id.homeFragment ->{
+//                }
+//                R.id.notification -> {
+//                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToNotificationsFragment())
+//                }
+//                R.id.explore -> {
+//                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToExploreFragment())
+//                }
+//                R.id.profile -> {
+//                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+//                }
+//            }
+//            true
+//        }
     }
 }

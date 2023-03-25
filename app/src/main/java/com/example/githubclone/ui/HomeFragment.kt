@@ -22,15 +22,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        Log.d("EEEE", "homefrag")
-
         initObservers()
 
         binding.apply {
             llRepo.setOnClickListener {
-                lifecycleScope.launchWhenResumed {
-                    viewModel.getUserProfileInfo()
-                }
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToRepositoriesFragment()
+                )
             }
 
             ivSearch.setOnClickListener {
@@ -43,9 +41,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 }
             }
 
-            llOrg.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
-            }
         }
     }
 

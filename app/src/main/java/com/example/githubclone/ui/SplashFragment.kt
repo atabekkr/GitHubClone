@@ -20,7 +20,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash){
             delay(1000)
             if (LocalStorage().isLogin) {
                 Log.d("TTTT", "ksajdfksjfio")
-                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToContainerHomeFragment())
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
             } else {
                 Log.d("TTTT", "is logine5")
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFirstFragment())
