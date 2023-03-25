@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.githubclone.R
 import com.example.githubclone.data.models.GetUserRepositories
-import com.example.githubclone.data.models.ItemsRepoData
 import com.example.githubclone.databinding.ItemPopularRepoBinding
 
 class PopularRepoAdapter : ListAdapter<GetUserRepositories, PopularRepoAdapter.PopularRepoViewHolder>(diffCallBack) {

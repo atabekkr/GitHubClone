@@ -44,9 +44,4 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
             adapter.submitList(it)
         }.launchIn(lifecycleScope)
     }
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
-    }
 }

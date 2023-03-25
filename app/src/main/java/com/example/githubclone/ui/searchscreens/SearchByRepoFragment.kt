@@ -56,9 +56,4 @@ class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
             }
         }.launchIn(lifecycleScope)
     }
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
-    }
 }

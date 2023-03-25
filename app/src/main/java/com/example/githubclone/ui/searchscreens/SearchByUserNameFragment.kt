@@ -52,8 +52,4 @@ class SearchByUserNameFragment : Fragment(R.layout.fragment_search_by_username) 
         }.launchIn(lifecycleScope)
     }
 
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
-    }
 }

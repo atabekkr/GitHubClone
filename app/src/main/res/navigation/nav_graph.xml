@@ -6,18 +6,6 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.githubclone.ui.bnavscreens.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_repositoriesFragment"
-            app:destination="@id/repositoriesFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.githubclone.ui.searchscreens.SearchFragment"
         android:label="SearchFragment"
@@ -30,42 +18,22 @@
             app:destination="@id/searchByRepoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/notificationsFragment"
-        android:name="com.example.githubclone.ui.bnavscreens.NotificationsFragment"
-        android:label="NotificationsFragment"
-        tools:layout="@layout/fragment_notifications"/>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.githubclone.ui.bnavscreens.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/exploreFragment"
-        android:name="com.example.githubclone.ui.bnavscreens.ExploreFragment"
-        android:label="ExploreFragment"
-        tools:layout="@layout/fragment_explore"/>
-    <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.githubclone.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/nav_graph" />
-        <action
             android:id="@+id/action_splashFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_containerHomeFragment"
+            app:destination="@id/containerHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.example.githubclone.ui.login.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first" >
-        <action
-            android:id="@+id/action_firstFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_first" />
     <fragment
         android:id="@+id/repositoriesFragment"
         android:name="com.example.githubclone.ui.repo.RepositoriesFragment"
@@ -88,5 +56,17 @@
         <argument
             android:name="repoName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/containerHomeFragment"
+        android:name="com.example.githubclone.ui.nestedgraph.ContainerHomeFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_containerHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_containerHomeFragment_to_repositoriesFragment"
+            app:destination="@id/repositoriesFragment" />
     </fragment>
 </navigation>

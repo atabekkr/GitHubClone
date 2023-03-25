@@ -13,22 +13,17 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val navHostFragment = this.supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment?
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = navHostFragment.findNavController()
 
-        if (navHostFragment != null) {
-            navController = navHostFragment.findNavController()
-        }
 
-        binding.bnvMain.setupWithNavController(navController)
-    }
-    fun visibilityOfBottomNavigation(visibility: Int) {
-        binding.bnvMain.visibility = visibility
     }
 }

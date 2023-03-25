@@ -49,10 +49,4 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         }
     }
-
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
-    }
 }

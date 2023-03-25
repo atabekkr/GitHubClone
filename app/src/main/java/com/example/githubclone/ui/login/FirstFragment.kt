@@ -54,9 +54,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     override fun onResume() {
         super.onResume()
-
-        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
-
         val uri: Uri? = requireActivity().intent?.data
         if (uri != null) {
             val code = uri.getQueryParameter("code")
@@ -66,9 +63,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 Toast.makeText(requireContext(), "Login success: $code", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launchWhenResumed {
                     viewModel.isSuccess()
-                    findNavController().navigate(
-                        FirstFragmentDirections.actionFirstFragmentToHomeFragment()
-                    )
+//                    findNavController().navigate(
+//                        FirstFragmentDirections.actionFirstFragmentToHomeFragment()
+//                    )
                 }
             } else if ((uri.getQueryParameter("error")) != null) {
                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
