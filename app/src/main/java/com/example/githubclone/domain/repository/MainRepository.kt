@@ -67,7 +67,11 @@ class MainRepository(private val api: GitHubApi) {
 
         if (responce.isSuccessful) {
             emit(ResultData.Success(responce.body()!!.items))
-        } else {
+        }
+        else if (responce.body()!!.incomplete_results) {
+
+        }
+        else {
             emit(ResultData.Message(responce.message()))
         }
     }

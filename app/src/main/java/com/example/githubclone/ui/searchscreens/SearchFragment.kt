@@ -1,18 +1,13 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.searchscreens
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentSearchBinding
-import com.example.githubclone.presentation.MainViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -53,5 +48,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
 
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
     }
 }

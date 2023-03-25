@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.SearchByUserNameFragment">
+    tools:context=".ui.searchscreens.SearchByUserNameFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
@@ -34,6 +34,20 @@
             android:fontFamily="@font/lato_black"
             android:textColor="@color/black" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Nothing to show"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:fontFamily="@font/lato_regular"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

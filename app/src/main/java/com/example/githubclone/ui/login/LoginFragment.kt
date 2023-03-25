@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.login
 
 import android.os.Bundle
 import android.view.View

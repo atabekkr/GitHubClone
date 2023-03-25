@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ProfileFragment">
+    tools:context=".ui.bnavscreens.ProfileFragment">
 
     <ImageView
         android:id="@+id/iv_settings"
@@ -113,6 +113,17 @@
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/black" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iv_star"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+        tools:listitem="@layout/item_popular_repo"
+        app:layout_constraintBottom_toTopOf="@id/ll_repo" />
+
     <LinearLayout
         android:id="@+id/ll_repo"
         android:layout_width="wrap_content"
@@ -121,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
         android:background="?selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@id/iv_star">
+        app:layout_constraintTop_toBottomOf="@id/recycler_view">
 
 
         <com.google.android.material.imageview.ShapeableImageView

@@ -1,4 +1,4 @@
-package com.example.githubclone
+package com.example.githubclone.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.githubclone.R
 import com.example.githubclone.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

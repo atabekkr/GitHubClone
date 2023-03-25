@@ -1,10 +1,11 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.repo
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentRepositoriesBinding
 import com.example.githubclone.presentation.MainViewModel
@@ -42,5 +43,10 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
         viewModel.getUserRepositoriesFlow.onEach {
             adapter.submitList(it)
         }.launchIn(lifecycleScope)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
     }
 }

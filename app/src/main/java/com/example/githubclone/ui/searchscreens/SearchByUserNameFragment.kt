@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.searchscreens
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentSearchByUsernameBinding
 import com.example.githubclone.presentation.MainViewModel
@@ -43,7 +44,16 @@ class SearchByUserNameFragment : Fragment(R.layout.fragment_search_by_username) 
 
     fun initObservers() {
         viewModel.getSearchByUserFlow.onEach {
-            adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.tvNull.visibility = View.VISIBLE
+            } else {
+                adapter.submitList(it)
+            }
         }.launchIn(lifecycleScope)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
     }
 }

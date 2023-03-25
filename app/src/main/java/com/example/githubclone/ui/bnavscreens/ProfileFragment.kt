@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.bnavscreens
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentProfileBinding
 import com.example.githubclone.presentation.MainViewModel
+import com.example.githubclone.ui.adapters.PopularRepoAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,16 +18,20 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
     private val viewModel by viewModel<MainViewModel>()
+    private val adapter = PopularRepoAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProfileBinding.bind(view)
+
+        binding.recyclerView.adapter = adapter
 
         initObservers()
 
 
         lifecycleScope.launchWhenResumed {
             viewModel.getUserProfileInfo()
+            viewModel.getUserRepositories()
         }
 
 
@@ -46,6 +51,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 tvFollowing.text = getString(R.string.tv_following, it.following)
                 countRepo.text = it.public_repos.toString()
             }
+        }.launchIn(lifecycleScope)
+
+        viewModel.getUserRepositoriesFlow.onEach {
+            adapter.submitList(it)
         }.launchIn(lifecycleScope)
     }
 }

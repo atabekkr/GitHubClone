@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.bnavscreens
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentHomeBinding
 import com.example.githubclone.presentation.MainViewModel
@@ -22,7 +23,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        initObservers()
 
         binding.apply {
             llRepo.setOnClickListener {
@@ -44,13 +44,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun initObservers() {
-        viewModel.getUserPrInfoSuccessFlow.onEach {
-            Log.d("atabekkr", it.login)
-        }.launchIn(lifecycleScope)
-
-        viewModel.getUserRepositoriesFlow.onEach {
-            Log.d("atabekkr", it.last().name)
-        }.launchIn(lifecycleScope)
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.VISIBLE)
     }
 }

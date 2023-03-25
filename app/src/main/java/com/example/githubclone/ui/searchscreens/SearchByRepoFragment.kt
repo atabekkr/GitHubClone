@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.searchscreens
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentSearchByRepoBinding
 import com.example.githubclone.presentation.MainViewModel
@@ -49,7 +49,16 @@ class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
 
     private fun initObservers() {
         viewModel.searchReposByRepoNameFlow.onEach {
-            adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.tvNull.visibility = View.VISIBLE
+            } else {
+                adapter.submitList(it)
+            }
         }.launchIn(lifecycleScope)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
     }
 }

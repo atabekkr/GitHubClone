@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.bnavscreens
 
 import androidx.fragment.app.Fragment
 import com.example.githubclone.R

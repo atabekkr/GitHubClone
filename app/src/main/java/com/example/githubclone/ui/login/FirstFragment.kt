@@ -1,4 +1,4 @@
-package com.example.githubclone.ui
+package com.example.githubclone.ui.login
 
 import android.content.Intent
 import android.net.Uri
@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.data.local.LocalStorage
 import com.example.githubclone.databinding.FragmentFirstBinding
@@ -54,8 +54,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     override fun onResume() {
         super.onResume()
+
+        (requireActivity() as MainActivity).visibilityOfBottomNavigation(View.GONE)
+
         val uri: Uri? = requireActivity().intent?.data
-        Log.w("TTTT", "$uri ->>>>>>>>")
         if (uri != null) {
             val code = uri.getQueryParameter("code")
             if (code != null) {
@@ -64,10 +66,14 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 Toast.makeText(requireContext(), "Login success: $code", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launchWhenResumed {
                     viewModel.isSuccess()
+                    findNavController().navigate(
+                        FirstFragmentDirections.actionFirstFragmentToHomeFragment()
+                    )
                 }
             } else if ((uri.getQueryParameter("error")) != null) {
                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 }
