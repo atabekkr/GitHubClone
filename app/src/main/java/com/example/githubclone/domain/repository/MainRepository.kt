@@ -1,78 +1,17 @@
 package com.example.githubclone.domain.repository
 
-import android.util.Log
-import com.example.githubclone.data.local.LocalStorage
-import com.example.githubclone.data.models.ResultData
-import com.example.githubclone.retrofit.GitHubApi
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.flow
+import com.example.githubclone.data.models.*
+import kotlinx.coroutines.flow.Flow
 
-class MainRepository(private val api: GitHubApi) {
+interface MainRepository {
 
-    suspend fun loginApi() = flow {
-        Log.d("TTTT", LocalStorage().code)
-        val responce =
-            api.getAccessToken(
-                "8f3cf5f09bd0c93a0528",
-                "5447af3efb5afba3751aa6a0025e97affcf1a538",
-                LocalStorage().code
-            )
+    suspend fun loginApi(): Flow<ResultData<String>>
 
-        Log.e("TTTT", responce.body()!!.accessToken)
-        if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!.accessToken))
-        } else {
-            emit(ResultData.Message(responce.message()))
-        }
-    }
+    suspend fun getUserProfileInfo(): Flow<ResultData<GetUserProfileInfoResponceData>>
 
-    suspend fun getUserProfileInfo() = flow {
-        val responce =
-            api.getUserProfileInfo()
+    suspend fun searchUsersByUsername(userName: String): Flow<ResultData<List<ItemsData>>>
 
-        Log.d("atabekkr", LocalStorage().token)
+    suspend fun getUserRepositories(): Flow<ResultData<List<GetUserRepositories>>>
 
-        if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!))
-        } else {
-            emit(ResultData.Message(responce.message()))
-        }
-    }
-
-    suspend fun searchUsersByUsername(userName: String) = flow {
-        val responce =
-            api.searchUsersByUsername(userName)
-
-        if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!.items))
-        } else {
-            emit(ResultData.Message(responce.message()))
-        }
-    }
-
-    suspend fun getUserRepositories() = flow {
-        val responce =
-            api.getUserRepositories()
-
-        if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!))
-        } else {
-            emit(ResultData.Message(responce.message()))
-        }
-    }
-
-    suspend fun searchRepoByRepoName(repoName: String) = flow {
-        val responce =
-            api.searchRepoByRepoName(repoName)
-
-        if (responce.isSuccessful) {
-            emit(ResultData.Success(responce.body()!!.items))
-        }
-        else if (responce.body()!!.incomplete_results) {
-
-        }
-        else {
-            emit(ResultData.Message(responce.message()))
-        }
-    }
+    suspend fun searchRepoByRepoName(repoName: String): Flow<ResultData<List<ItemsRepoData>>>
 }

@@ -2,12 +2,9 @@ package com.example.githubclone.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.example.githubclone.data.models.*
 import com.example.githubclone.domain.repository.MainRepository
-import com.example.githubclone.ui.paging.PageSource
+import com.example.githubclone.domain.repository.impl.MainRepositoryImpl
 import kotlinx.coroutines.flow.*
 
 class MainViewModel(private val repo: MainRepository) : ViewModel() {

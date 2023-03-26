@@ -1,6 +1,7 @@
 package com.example.githubclone.di
 
 import com.example.githubclone.domain.repository.MainRepository
+import com.example.githubclone.domain.repository.impl.MainRepositoryImpl
 import com.example.githubclone.presentation.MainViewModel
 import com.example.githubclone.retrofit.GitHubApi
 import com.example.githubclone.retrofit.GitHubInterceptor
@@ -14,7 +15,7 @@ val domainModule = module {
 
 
     single<MainRepository> {
-        MainRepository(api = get())
+        MainRepositoryImpl(api = get())
     }
 
     fun provideRetrofit(): Retrofit {
