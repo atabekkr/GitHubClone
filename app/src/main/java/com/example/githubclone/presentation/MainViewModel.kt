@@ -3,11 +3,10 @@ package com.example.githubclone.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubclone.data.models.*
-import com.example.githubclone.domain.repository.MainRepository
-import com.example.githubclone.domain.repository.impl.MainRepositoryImpl
+import com.example.githubclone.domain.usecase.MainUseCase
 import kotlinx.coroutines.flow.*
 
-class MainViewModel(private val repo: MainRepository) : ViewModel() {
+class MainViewModel(private val useCase: MainUseCase) : ViewModel() {
 
     val getSuccessFlow = MutableSharedFlow<String>()
     val getMessageFlow = MutableSharedFlow<String>()
@@ -19,7 +18,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
     val searchReposByRepoNameFlow = MutableSharedFlow<List<ItemsRepoData>>()
 
     suspend fun isSuccess() {
-        repo.loginApi().onEach {
+        useCase.loginApi().onEach {
             when(it) {
                 is ResultData.Success -> {
                     getSuccessFlow.emit(it.data)
@@ -35,7 +34,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     suspend fun getUserProfileInfo() {
-        repo.getUserProfileInfo().onEach {
+        useCase.getUserProfileInfo().onEach {
             when(it) {
                 is ResultData.Success -> {
                     getUserPrInfoSuccessFlow.emit(it.data)
@@ -51,7 +50,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     suspend fun searchUsersByUserName(userName: String) {
-        repo.searchUsersByUsername(userName).onEach {
+        useCase.searchUsersByUsername(userName).onEach {
             when (it) {
                 is ResultData.Success -> {
                     getSearchByUserFlow.emit(it.data)
@@ -67,7 +66,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     suspend fun getUserRepositories() {
-        repo.getUserRepositories().onEach {
+        useCase.getUserRepositories().onEach {
             when (it) {
                 is ResultData.Success -> {
                     getUserRepositoriesFlow.emit(it.data)
@@ -83,7 +82,7 @@ class MainViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     suspend fun searchRepoByRepoName(repoName: String) {
-        repo.searchRepoByRepoName(repoName).onEach {
+        useCase.searchRepoByRepoName(repoName).onEach {
             when (it) {
                 is ResultData.Success -> {
                     searchReposByRepoNameFlow.emit(it.data)

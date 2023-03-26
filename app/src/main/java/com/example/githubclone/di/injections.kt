@@ -2,6 +2,8 @@ package com.example.githubclone.di
 
 import com.example.githubclone.domain.repository.MainRepository
 import com.example.githubclone.domain.repository.impl.MainRepositoryImpl
+import com.example.githubclone.domain.usecase.MainUseCase
+import com.example.githubclone.domain.usecase.impl.MainUseCaseImpl
 import com.example.githubclone.presentation.MainViewModel
 import com.example.githubclone.retrofit.GitHubApi
 import com.example.githubclone.retrofit.GitHubInterceptor
@@ -16,6 +18,10 @@ val domainModule = module {
 
     single<MainRepository> {
         MainRepositoryImpl(api = get())
+    }
+
+    factory<MainUseCase> {
+        MainUseCaseImpl(repo = get())
     }
 
     fun provideRetrofit(): Retrofit {
@@ -54,6 +60,6 @@ val domainModule = module {
 
 val appModule = module {
     factory<MainViewModel> {
-        MainViewModel(repo = get())
+        MainViewModel(useCase = get())
     }
 }
