@@ -27,7 +27,8 @@
             app:destination="@id/firstFragment" />
         <action
             android:id="@+id/action_splashFragment_to_containerHomeFragment"
-            app:destination="@id/containerHomeFragment" />
+            app:destination="@id/containerHomeFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/firstFragment"
