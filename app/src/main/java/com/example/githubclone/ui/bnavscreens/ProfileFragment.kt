@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentProfileBinding
@@ -16,16 +17,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
-    private lateinit var binding: FragmentProfileBinding
+    private val binding by viewBinding(FragmentProfileBinding::bind)
     private val viewModel by viewModel<MainViewModel>()
-    private val adapter = PopularRepoAdapter()
+    private lateinit var adapter: PopularRepoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentProfileBinding.bind(view)
 
-        binding.recyclerView.adapter = adapter
 
+        initData()
         initObservers()
 
 
@@ -36,6 +36,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
 
+    }
+
+    private fun initData() {
+        adapter = PopularRepoAdapter()
+        binding.recyclerView.adapter = adapter
     }
 
     @SuppressLint("StringFormatMatches")

@@ -7,27 +7,41 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentSearchByRepoBinding
 import com.example.githubclone.presentation.MainViewModel
 import com.example.githubclone.ui.adapters.SearchRepoAdapter
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.ldralighieri.corbind.view.clicks
 
 class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
 
-    private lateinit var binding: FragmentSearchByRepoBinding
+    private val  binding by viewBinding(FragmentSearchByRepoBinding::bind)
     private val viewModel by viewModel<MainViewModel>()
-    private val adapter = SearchRepoAdapter()
+    private lateinit var adapter: SearchRepoAdapter
     private val navArgs: SearchByRepoFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSearchByRepoBinding.bind(view)
 
+
+        initData()
+        initObservers()
+        initListeners()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.searchRepoByRepoName(navArgs.repoName)
+        }
+    }
+
+    private fun initData() {
         binding.apply {
+            adapter = SearchRepoAdapter()
             recyclerView.adapter = adapter
 
             recyclerView.addItemDecoration(
@@ -35,15 +49,6 @@ class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
                     requireContext(), DividerItemDecoration.VERTICAL
                 )
             )
-            ivBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
-        }
-
-        initObservers()
-
-        lifecycleScope.launchWhenResumed {
-            viewModel.searchRepoByRepoName(navArgs.repoName)
         }
     }
 
@@ -54,6 +59,12 @@ class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
             } else {
                 adapter.submitList(it)
             }
+        }.launchIn(lifecycleScope)
+    }
+
+    private fun initListeners() {
+        binding.ivBack.clicks().debounce(200).onEach {
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
     }
 }

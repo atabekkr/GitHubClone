@@ -11,18 +11,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentContainerHomeBinding
 import com.example.githubclone.databinding.FragmentMainBinding
 
 class ContainerHomeFragment: Fragment(R.layout.fragment_main) {
 
-    private lateinit var binding: FragmentMainBinding
+    private val binding by viewBinding(FragmentMainBinding::bind)
     private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentMainBinding.bind(view)
 
         val navHostFragment =
             childFragmentManager.findFragmentById(R.id.fragment_container_main1) as NavHostFragment

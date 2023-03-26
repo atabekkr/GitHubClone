@@ -6,34 +6,35 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentSearchByUsernameBinding
 import com.example.githubclone.presentation.MainViewModel
 import com.example.githubclone.ui.adapters.SearchUserAdapter
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.ldralighieri.corbind.view.clicks
 
 class SearchByUserNameFragment : Fragment(R.layout.fragment_search_by_username) {
 
-    private lateinit var binding: FragmentSearchByUsernameBinding
+    private val binding by viewBinding(FragmentSearchByUsernameBinding::bind)
     private val viewModel by viewModel<MainViewModel>()
     private val navArgs: SearchByUserNameFragmentArgs by navArgs()
-    private val adapter = SearchUserAdapter()
+    private lateinit var adapter: SearchUserAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSearchByUsernameBinding.bind(view)
 
-        binding.apply {
-            recyclerView.adapter = adapter
-            ivBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
-        }
 
+
+        initData()
         initObservers()
+        initListeners()
+
+
 
         lifecycleScope.launchWhenResumed {
             viewModel.searchUsersByUserName(navArgs.username)
@@ -42,13 +43,24 @@ class SearchByUserNameFragment : Fragment(R.layout.fragment_search_by_username) 
 
     }
 
-    fun initObservers() {
+    private fun initData() {
+        adapter = SearchUserAdapter()
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun initObservers() {
         viewModel.getSearchByUserFlow.onEach {
             if (it.isEmpty()) {
                 binding.tvNull.visibility = View.VISIBLE
             } else {
                 adapter.submitList(it)
             }
+        }.launchIn(lifecycleScope)
+    }
+
+    private fun initListeners() {
+        binding.ivBack.clicks().debounce(200).onEach {
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
     }
 

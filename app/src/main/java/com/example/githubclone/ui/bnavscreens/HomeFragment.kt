@@ -5,40 +5,56 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.githubclone.ui.MainActivity
 import com.example.githubclone.R
 import com.example.githubclone.databinding.FragmentHomeBinding
 import com.example.githubclone.presentation.MainViewModel
 import com.example.githubclone.ui.nestedgraph.ContainerHomeFragmentDirections
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.ldralighieri.corbind.view.clicks
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private lateinit var binding: FragmentHomeBinding
+    private val binding by viewBinding(FragmentHomeBinding::bind)
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
 
-        val navController = Navigation.findNavController(requireActivity(), R.id.fragment_container)
 
+        initData()
+        initListeners()
+
+
+    }
+
+    private fun initData() {
+        navController = Navigation.findNavController(requireActivity(), R.id.fragment_container)
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun initListeners() {
         binding.apply {
 
-            llRepo.setOnClickListener {
+            llRepo.clicks().debounce(200).onEach {
                 navController.navigate(
                     ContainerHomeFragmentDirections.actionContainerHomeFragmentToRepositoriesFragment()
                 )
-            }
+            }.launchIn(lifecycleScope)
 
-            ivSearch.setOnClickListener {
+            ivSearch.clicks().debounce(200).onEach {
                 navController.navigate(
                     ContainerHomeFragmentDirections.actionContainerHomeFragmentToSearchFragment()
                 )
-            }
+            }.launchIn(lifecycleScope)
         }
     }
 }
