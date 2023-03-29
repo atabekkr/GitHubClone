@@ -6,9 +6,8 @@ import com.example.githubclone.domain.usecase.MainUseCase
 import kotlinx.coroutines.flow.Flow
 
 class MainUseCaseImpl(private val repo: MainRepository) : MainUseCase {
-    override suspend fun loginApi(): Flow<ResultData<String>> {
-        return repo.loginApi()
-    }
+
+    override suspend fun loginApi(): Flow<ResultData<String>> = repo.loginApi()
 
     override suspend fun getUserProfileInfo(): Flow<ResultData<GetUserProfileInfoResponceData>> = repo.getUserProfileInfo()
 

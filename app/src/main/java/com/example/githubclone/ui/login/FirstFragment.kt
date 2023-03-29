@@ -45,6 +45,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         viewModel.getSuccessFlow.onEach {
             LocalStorage().token = it
             LocalStorage().isLogin = true
+            findNavController().navigate(
+                FirstFragmentDirections.actionFirstFragmentToContainerHomeFragment()
+            )
         }.launchIn(lifecycleScope)
 
         viewModel.getMessageFlow.onEach {
@@ -63,9 +66,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 Toast.makeText(requireContext(), "Login success: $code", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launchWhenResumed {
                     viewModel.isSuccess()
-//                    findNavController().navigate(
-//                        FirstFragmentDirections.actionFirstFragmentToHomeFragment()
-//                    )
                 }
             } else if ((uri.getQueryParameter("error")) != null) {
                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()

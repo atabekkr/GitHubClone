@@ -34,7 +34,11 @@
         android:id="@+id/firstFragment"
         android:name="com.example.githubclone.ui.login.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first" />
+        tools:layout="@layout/fragment_first" >
+        <action
+            android:id="@+id/action_firstFragment_to_containerHomeFragment"
+            app:destination="@id/containerHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/repositoriesFragment"
         android:name="com.example.githubclone.ui.repo.RepositoriesFragment"

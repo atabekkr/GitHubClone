@@ -1,5 +1,6 @@
 package com.example.githubclone.ui.paging
 
+import android.annotation.SuppressLint
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.githubclone.data.models.ItemsData
@@ -20,6 +21,7 @@ class PageSource(
         return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun load(params: LoadParams<Int>): PagingSource.LoadResult<Int, ItemsRepoData> {
         if (query.isEmpty()) {
             return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
@@ -31,9 +33,9 @@ class PageSource(
         val responce = api.searchRepoByRepoName(query)
         if (responce.isSuccessful) {
             val articles = checkNotNull(responce.body()).items
-            val nextKey = if(articles.size < pageSize) null else page + 1
+            val nextKey = if (articles.size < pageSize) null else page + 1
             val prevKey = if (page == 1) null else page - 1
-                return LoadResult.Page(articles, nextKey, prevKey)
+            return LoadResult.Page(articles, nextKey, prevKey)
         } else {
             return LoadResult.Error(HttpException(responce))
         }
