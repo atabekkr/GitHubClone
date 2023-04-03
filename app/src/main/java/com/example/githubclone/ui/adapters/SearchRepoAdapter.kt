@@ -2,6 +2,7 @@ package com.example.githubclone.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -11,17 +12,19 @@ import com.example.githubclone.data.models.ItemsRepoData
 import com.example.githubclone.databinding.ItemSearchByRepoBinding
 
 class SearchRepoAdapter :
-    ListAdapter<ItemsRepoData, SearchRepoAdapter.RepoViewHolder>(diffCallBack) {
+    PagingDataAdapter<ItemsRepoData, SearchRepoAdapter.RepoViewHolder>(diffCallBack) {
 
     inner class RepoViewHolder(private val binding: ItemSearchByRepoBinding) :
         ViewHolder(binding.root) {
             fun bind() {
                 val d = getItem(absoluteAdapterPosition)
                 binding.apply {
-                    Glide.with(ivProf)
-                        .load(d.owner.avatar_url)
-                        .into(ivProf)
-                    appName.text = d.name
+                    if (d != null) {
+                        Glide.with(ivProf)
+                            .load(d.owner.avatar_url)
+                            .into(ivProf)
+                    }
+                    appName.text = d!!.name
                     username.text = d.owner.login
                     tvDesc.text = d.description
                     tvStar.text = d.stargazers_count.toString()

@@ -1,43 +1,51 @@
 package com.example.githubclone.ui.paging
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.githubclone.data.models.ItemsData
 import com.example.githubclone.data.models.ItemsRepoData
-import com.example.githubclone.data.models.SearchRepoByRepoNameResponceData
 import com.example.githubclone.retrofit.GitHubApi
+import okio.IOException
 import retrofit2.HttpException
-import retrofit2.http.HTTP
-import retrofit2.http.Query
+
+private const val TMDB_STARTING_PAGE_INDEX = 1
+const val NETWORK_PAGE_SIZE = 25
 
 class PageSource(
-    private val api: GitHubApi,
+    private val service: GitHubApi,
     private val query: String
 ) : PagingSource<Int, ItemsRepoData>() {
     override fun getRefreshKey(state: PagingState<Int, ItemsRepoData>): Int? {
-        val anchorPosition = state.anchorPosition ?: return null
-        val page = state.closestPageToPosition(anchorPosition) ?: return null
-        return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
     @SuppressLint("SuspiciousIndentation")
     override suspend fun load(params: LoadParams<Int>): PagingSource.LoadResult<Int, ItemsRepoData> {
-        if (query.isEmpty()) {
-            return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
-        }
-
-        val page = params.key ?: 1
-        val pageSize = params.loadSize.coerceAtLeast(2)
-
-        val responce = api.searchRepoByRepoName(query)
-        if (responce.isSuccessful) {
-            val articles = checkNotNull(responce.body()).items
-            val nextKey = if (articles.size < pageSize) null else page + 1
-            val prevKey = if (page == 1) null else page - 1
-            return LoadResult.Page(articles, nextKey, prevKey)
-        } else {
-            return LoadResult.Error(HttpException(responce))
+        val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
+        return try {
+            val response = service.searchRepoByRepoName(query, pageIndex)
+            Log.d("TTTT", "$pageIndex")
+            val words = response.body()!!.items
+            val nextKey =
+                if (words.isEmpty()) {
+                    null
+                } else {
+                    Log.d("TTTT", "${params.loadSize}")
+                    pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
+                }
+            LoadResult.Page(
+                data = words,
+                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
+                nextKey = nextKey
+            )
+        } catch (exception : IOException) {
+            return LoadResult.Error(exception)
+        } catch (e: HttpException) {
+            return LoadResult.Error(e)
         }
     }
 }

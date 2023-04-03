@@ -34,6 +34,6 @@ interface GitHubApi {
     suspend fun getUserRepositories() : Response<List<GetUserRepositories>>
 
     @GET("/search/repositories?q")
-    suspend fun searchRepoByRepoName(@Query("q") repoName: String) : Response<SearchRepoByRepoNameResponceData>
+    suspend fun searchRepoByRepoName(@Query("q") repoName: String, @Query("page") page: Int) : Response<SearchRepoByRepoNameResponceData>
 
 }

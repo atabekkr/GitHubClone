@@ -1,5 +1,6 @@
 package com.example.githubclone.domain.usecase.impl
 
+import androidx.paging.PagingData
 import com.example.githubclone.data.models.*
 import com.example.githubclone.domain.repository.MainRepository
 import com.example.githubclone.domain.usecase.MainUseCase
@@ -15,5 +16,5 @@ class MainUseCaseImpl(private val repo: MainRepository) : MainUseCase {
 
     override suspend fun getUserRepositories(): Flow<ResultData<List<GetUserRepositories>>> = repo.getUserRepositories()
 
-    override suspend fun searchRepoByRepoName(repoName: String): Flow<ResultData<List<ItemsRepoData>>> = repo.searchRepoByRepoName(repoName)
+    override suspend fun searchRepoByRepoName(repoName: String): Flow<PagingData<ItemsRepoData>> = repo.searchRepoByRepoName(repoName)
 }
