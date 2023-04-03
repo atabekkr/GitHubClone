@@ -2,6 +2,7 @@ package com.example.githubclone.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.example.githubclone.data.models.*
 import com.example.githubclone.domain.usecase.MainUseCase
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,7 @@ class MainViewModel(private val useCase: MainUseCase) : ViewModel() {
     val getUserPrInfoSuccessFlow = MutableSharedFlow<GetUserProfileInfoResponceData>()
     val getUserRepositoriesFlow = MutableSharedFlow<List<GetUserRepositories>>()
     val getSearchByUserFlow = MutableSharedFlow<List<ItemsData>>()
-    val searchReposByRepoNameFlow = MutableSharedFlow<List<ItemsRepoData>>()
+    val searchReposByRepoNameFlow = MutableSharedFlow< PagingData<ItemsRepoData>>()
 
     suspend fun isSuccess() {
         useCase.loginApi().onEach {
@@ -83,17 +84,7 @@ class MainViewModel(private val useCase: MainUseCase) : ViewModel() {
 
     suspend fun searchRepoByRepoName(repoName: String) {
         useCase.searchRepoByRepoName(repoName).onEach {
-            when (it) {
-                is ResultData.Success -> {
-                    searchReposByRepoNameFlow.emit(it.data)
-                }
-                is ResultData.Message -> {
-                    getMessageFlow.emit(it.message)
-                }
-                is ResultData.Error -> {
-                    getErrorFlow.emit(it.error)
-                }
-            }
+            searchReposByRepoNameFlow.emit(it)
         }.launchIn(viewModelScope)
     }
 }

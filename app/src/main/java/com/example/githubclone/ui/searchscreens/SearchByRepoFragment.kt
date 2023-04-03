@@ -54,11 +54,7 @@ class SearchByRepoFragment : Fragment(R.layout.fragment_search_by_repo) {
 
     private fun initObservers() {
         viewModel.searchReposByRepoNameFlow.onEach {
-            if (it.isEmpty()) {
-                binding.tvNull.visibility = View.VISIBLE
-            } else {
-                adapter.submitList(it)
-            }
+                adapter.submitData(it)
         }.launchIn(lifecycleScope)
     }
 
