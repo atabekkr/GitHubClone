@@ -44,7 +44,7 @@ class MainViewModel(private val useCase: MainUseCase) : ViewModel() {
                 }
                 is ResultData.Error -> {
                     getErrorFlow.emit(it.error)
-                }
+                } //jffj
             }
         }.launchIn(viewModelScope)
     }
